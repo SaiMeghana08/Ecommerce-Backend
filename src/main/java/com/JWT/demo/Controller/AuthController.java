@@ -3,6 +3,7 @@ package com.JWT.demo.Controller;
 
 import com.JWT.demo.Configuration.JwtUtil;
 import com.JWT.demo.Model.AuthRequest;
+import com.JWT.demo.Model.AuthResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -24,7 +25,7 @@ public class AuthController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/authenticate")
-    public String createAuthenticationToken(@RequestBody AuthRequest authRequest) throws Exception {
+    public AuthResponse createAuthenticationToken(@RequestBody AuthRequest authRequest) throws Exception {
         try {
             // 1️⃣ Authenticate username & password
             authenticationManager.authenticate(
@@ -44,6 +45,11 @@ public class AuthController {
         String jwt = jwtUtil.generateToken(userDetails.getUsername());
 
         // 4️⃣ Return the token to the client
-        return jwt;
+        AuthResponse res=new AuthResponse(
+                jwt,
+                userDetails.getUsername(),
+                userDetails.getAuthorities()
+        );
+        return res;
     }
 }
