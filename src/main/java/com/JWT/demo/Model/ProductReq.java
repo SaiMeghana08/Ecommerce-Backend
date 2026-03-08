@@ -6,15 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.annotation.processing.Generated;
 import java.util.Set;
 
 @Entity
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+public class ProductReq {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer product_id;
@@ -22,12 +21,7 @@ public class Product {
     private String product_desc;
     private Integer actual_price;
     private Integer discount_price;
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(
-            name="ProductImagesMap",
-            joinColumns = @JoinColumn(name="product_id"),
-            inverseJoinColumns = @JoinColumn(name="image_id")
-    )
-    private Set<ProductImages> productImages;
     private String category;
 }
+
+

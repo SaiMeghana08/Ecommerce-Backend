@@ -39,16 +39,31 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
+        String path = request.getServletPath();
+
+        if(path.startsWith("/authenticate") ||
+                path.startsWith("/registerNewUser") ||
+                path.startsWith("/createProduct")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
         final String authHeader = request.getHeader("Authorization");
         String username = null;
         String jwtToken = null;
 
         // 1️⃣ Check if Authorization header exists and starts with Bearer
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            jwtToken = authHeader.substring(7); // Remove "Bearer "
-            username = extractUsername(jwtToken);
-        }
 
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+
+            jwtToken = authHeader.substring(7);
+
+            try {
+                username = extractUsername(jwtToken);
+            } catch (Exception e) {
+                System.out.println("JWT Error: " + e.getMessage());
+            }
+        }
         // 2️⃣ Validate and set authentication
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
