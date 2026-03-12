@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.cdi.JpaRepositoryExtension;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProductRepo extends JpaRepository<ProductReq,Integer> {
+public interface ProductRepo extends JpaRepository<Product,Integer> {
 
 }
