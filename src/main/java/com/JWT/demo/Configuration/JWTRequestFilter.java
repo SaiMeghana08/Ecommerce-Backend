@@ -42,8 +42,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
         String path = request.getServletPath();
 
         if(path.startsWith("/authenticate") ||
-                path.startsWith("/registerNewUser") ||
-                path.startsWith("/createProduct")) {
+                path.startsWith("/registerNewUser")) {
 
             filterChain.doFilter(request, response);
             return;

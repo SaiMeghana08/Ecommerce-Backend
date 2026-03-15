@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -22,5 +23,9 @@ public class ProductService {
     }
     public void deleteProd(Integer id){
         productRepo.deleteById(id);
+    }
+    
+    public Optional<Product> getProdsById(Integer id){
+        return productRepo.findById(id);
     }
 }

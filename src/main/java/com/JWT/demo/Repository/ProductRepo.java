@@ -1,12 +1,12 @@
 package com.JWT.demo.Repository;
 
 import com.JWT.demo.Model.Product;
-import com.JWT.demo.Model.ProductReq;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.cdi.JpaRepositoryExtension;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface ProductRepo extends JpaRepository<Product,Integer> {
-
+    public Optional<Product> findById(Integer Id);
 }

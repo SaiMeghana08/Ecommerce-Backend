@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -50,13 +51,21 @@ public class ProductController {
         }
         return images;
     }
+    
     @GetMapping("/getProd")
     public List<Product> getAllProducts(){
         return productService.getProds();
     }
 
+    @PreAuthorize("hasAuthority('Admin')")
     @DeleteMapping("/delete/{id}")
     public void deleteProd(@PathVariable("id")Integer id){
         productService.deleteProd(id);
+    }
+
+    
+    @GetMapping("/product/{productId}")
+    public Optional<Product> getProductById(@PathVariable("productId") Integer id){
+        return productService.getProdsById(id);
     }
 }
