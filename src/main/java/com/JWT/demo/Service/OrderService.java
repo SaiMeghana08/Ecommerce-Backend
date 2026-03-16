@@ -49,7 +49,7 @@ public class OrderService {
                     orderReq.getContactNumber(),
                     orderReq.getAlternateContactNumber(),
                     ORDER_PLACED,
-                    val.getDiscount_price() * o.getQuantity(),
+                    val.getDiscountPrice() * o.getQuantity(),
                     val,
                     user
             );

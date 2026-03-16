@@ -7,6 +7,8 @@ import com.JWT.demo.Service.ProductService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
@@ -50,8 +52,8 @@ public class ProductController {
     }
     
     @GetMapping("/getProd")
-    public List<Product> getAllProducts(){
-        return productService.getProds();
+    public Page<Product> getAllProducts(Pageable pageable,@RequestParam String searchKey){
+        return productService.getProds(pageable,searchKey);
     }
 
     @PreAuthorize("hasAuthority('Admin')")

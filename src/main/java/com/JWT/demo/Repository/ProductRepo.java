@@ -1,6 +1,8 @@
 package com.JWT.demo.Repository;
 
 import com.JWT.demo.Model.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +11,8 @@ import java.util.Optional;
 @Repository
 public interface ProductRepo extends JpaRepository<Product,Integer> {
     public Optional<Product> findById(Integer Id);
+
+    Page<Product> findByProductNameContainingIgnoreCaseOrProductDescContainingIgnoreCase(
+            String product_name, String product_desc, Pageable pageable);
+
 }

@@ -17,12 +17,12 @@ import java.util.Set;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer product_id;
-    private String product_name;
+    private Integer productId;
+    private String productName;
     @Column(length=2000)
-    private String product_desc;
-    private Integer actual_price;
-    private Integer discount_price;
+    private String productDesc;
+    private Integer actualPrice;
+    private Integer discountPrice;
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(
             name="ProductImagesMap",

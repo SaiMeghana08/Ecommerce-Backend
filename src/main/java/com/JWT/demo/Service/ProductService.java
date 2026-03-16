@@ -4,6 +4,8 @@ import com.JWT.demo.Model.Product;
 import com.JWT.demo.Model.ProductReq;
 import com.JWT.demo.Repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +21,13 @@ public class ProductService {
         return productRepo.save(product);
     }
 
-    public List<Product> getProds() {
-        return productRepo.findAll();
+    public Page<Product> getProds(Pageable pageable,String searchKey) {
+        if(searchKey.equals("")){
+            return productRepo.findAll(pageable);
+        }else{
+            return productRepo.findByProductNameContainingIgnoreCaseOrProductDescContainingIgnoreCase(searchKey,searchKey,pageable);
+        }
+
     }
     public void deleteProd(Integer id){
         productRepo.deleteById(id);
