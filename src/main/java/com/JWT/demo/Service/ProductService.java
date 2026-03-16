@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,5 +28,16 @@ public class ProductService {
     
     public Optional<Product> getProdsById(Integer id){
         return productRepo.findById(id);
+    }
+    public List<Product> getProdDetails(boolean isSingleOrder,Integer productId){
+        if(isSingleOrder){
+            List<Product> products=new ArrayList<>();
+            Product product=productRepo.findById(productId).get();
+            products.add(product);
+            return products;
+        }else{
+
+        }
+        return new ArrayList<>();
     }
 }

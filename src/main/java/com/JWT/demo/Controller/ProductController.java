@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 public class ProductController {
@@ -67,5 +64,11 @@ public class ProductController {
     @GetMapping("/product/{productId}")
     public Optional<Product> getProductById(@PathVariable("productId") Integer id){
         return productService.getProdsById(id);
+    }
+
+    @PreAuthorize("hasAuthority('User')")
+    @GetMapping("/getProdDetails/{singleOrder}/{productId}")
+    public List<Product> getProdDetails(@PathVariable("singleOrder") boolean isSingleOrder,@PathVariable("productId") Integer productId){
+        return productService.getProdDetails(isSingleOrder,productId);
     }
 }

@@ -47,4 +47,12 @@ public class UserService {
         role2.setRoles(userRole);
         repo.save(role2);
     }
+    public void registerUser(RolesList User){
+        Role role = repo1.findById("User").get();
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        User.setRoles(roles);
+        User.setPassword(passwordEncoder.encode(User.getPassword()));
+        repo.save(User);
+    }
 }

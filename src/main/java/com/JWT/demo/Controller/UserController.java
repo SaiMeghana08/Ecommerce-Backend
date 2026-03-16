@@ -7,9 +7,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,5 +47,10 @@ public class UserController {
     @GetMapping("/check")
     public Object checkAuth() {
         return SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+    }
+
+    @PostMapping("/registerUser")
+    public void registerUser(@RequestBody RolesList User){
+        service.registerUser(User);
     }
 }

@@ -24,6 +24,7 @@ import java.io.IOException;
 @Component
 public class JWTRequestFilter extends OncePerRequestFilter {
 
+    public static String UserLogin="";
     private UserDetailsService userDetailsService;
 
     @Value("${jwt.secret}")
@@ -59,6 +60,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
             try {
                 username = extractUsername(jwtToken);
+                UserLogin=username;
             } catch (Exception e) {
                 System.out.println("JWT Error: " + e.getMessage());
             }
