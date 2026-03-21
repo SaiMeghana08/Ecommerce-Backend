@@ -3,11 +3,9 @@ package com.JWT.demo.Controller;
 import com.JWT.demo.Model.CartDetails;
 import com.JWT.demo.Service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,8 +19,15 @@ public class CartController {
     public CartDetails addtocart(@PathVariable Integer productId) {
         return cartService.addtocart(productId);
     }
+    @PreAuthorize("hasAuthority('User')")
     @GetMapping("/getCartDetails")
     public List<CartDetails> getCartDetails(){
         return cartService.getCartDetails();
+    }
+
+    @PreAuthorize("hasAuthority('User')")
+    @DeleteMapping("/deleteCart/{cartId}")
+    public void deleteCartItem(@PathVariable Integer cartId){
+        cartService.deleteCartItem(cartId);
     }
 }

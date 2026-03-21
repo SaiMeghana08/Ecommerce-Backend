@@ -2,11 +2,9 @@ package com.JWT.demo.Service;
 
 import com.JWT.demo.Configuration.JWTRequestFilter;
 import com.JWT.demo.Model.*;
-import com.JWT.demo.Repository.OrderRepo;
-import com.JWT.demo.Repository.ProductRepo;
-import com.JWT.demo.Repository.RoleRepo;
-import com.JWT.demo.Repository.UserRepo;
+import com.JWT.demo.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +21,9 @@ public class OrderService {
     private ProductRepo productRepo;
     @Autowired
     private UserRepo userRepo;
-    public void placeOrder(OrderReq orderReq){
+    @Autowired
+    private CartRepo cartRepo;
+    public void placeOrder(OrderReq orderReq,boolean isSingleCheckout){
 
         List<OrderQuantity> productQuantityList = orderReq.getOrderQuantities();
 
@@ -53,8 +53,30 @@ public class OrderService {
                     val,
                     user
             );
-
+            if(!isSingleCheckout){
+                List<CartDetails> carts=cartRepo.findByUser(user);
+                carts.stream().forEach(x->cartRepo.deleteById(x.getCartId()));
+            }
             orderRepo.save(order);
         }
+    }
+
+    public List<Order> getOrderDetails() {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        RolesList user=userRepo.findByUser(userName);
+        return orderRepo.findByUser(user);
+    }
+
+    public List<Order> getAllOrders() {
+        return orderRepo.findAll();
+    }
+
+    public Order updateOrderStatus(Integer orderId) {
+        Order order = orderRepo.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        order.setOrderStatus("DELIVERED");
+
+        return orderRepo.save(order);
     }
 }
