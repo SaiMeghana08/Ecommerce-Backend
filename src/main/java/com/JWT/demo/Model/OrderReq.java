@@ -14,5 +14,5 @@ public class OrderReq {
     private String contactNumber;
     private String alternateContactNumber;
     private List<OrderQuantity> orderQuantities;
-
+    private String transactionId;
 }

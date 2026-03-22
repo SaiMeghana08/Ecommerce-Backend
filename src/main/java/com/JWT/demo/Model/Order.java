@@ -23,6 +23,7 @@ public class Order{
     private String orderAlternateNumber;
     private String orderStatus;
     private Double orderAmount;
+    private String transactionId;
     @ManyToOne
     @JoinColumn(name="product_id")
     private Product product;
@@ -32,7 +33,7 @@ public class Order{
     private RolesList user;
 
 
-    public Order(String fullName, String fullAddress, String contactNumber, String alternateContactNumber, String orderPlaced, double v, Product val, RolesList user) {
+    public Order(String fullName, String fullAddress, String contactNumber, String alternateContactNumber, String orderPlaced, double v, Product val, RolesList user,String transactionId) {
         this.orderFullName=fullName;
         this.orderFullAddress=fullAddress;
         this.orderContactNumber=contactNumber;
@@ -41,5 +42,6 @@ public class Order{
         this.orderStatus=orderPlaced;
         this.product=val;
         this.user=user;
+        this.transactionId=transactionId;
     }
 }
